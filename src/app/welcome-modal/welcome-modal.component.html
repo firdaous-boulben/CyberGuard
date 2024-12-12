@@ -1,0 +1,86 @@
+<!-- Welcome Modal -->
+<div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="isVisible" (click)="closeModal()">
+    <div class="fixed inset-0 bg-black opacity-50"></div>
+    <div class="font-montserrat text-center backdrop-blur bg-transparent text-white gradient-border overflow-hidden shadow-lg z-10 max-w-md w-full p-8 relative" (click)="$event.stopPropagation()">
+        <h2 class="text-[28px] font-semibold mt-6 mb-4">Welcome to CyberGuard!</h2>
+        <p class="text-lg mb-12">Log in or sign up to take control of your cybersecurity.</p>
+
+        <div class="flex flex-col space-y-4 mt-4 mb-8">
+            <button (click)="openLoginModal()" class="bg-customBlue text-black font-semibold py-4 px-8 rounded-3xl hover:bg-[#48e8f0] transition duration-200 w-full">
+                Log In
+            </button>
+            <button (click)="openSignupModal()" class="border border-customBlue text-white font-semibold py-4 px-8 rounded-3xl hover:bg-customBlue hover:text-black transition duration-200 w-full">
+                Sign Up
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Log In Modal -->
+<div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="isLoginVisible" (click)="closeLoginModal()">
+    <div class="fixed inset-0 bg-black opacity-50"></div>
+    <div class="font-montserrat text-center backdrop-blur bg-transparent text-white gradient-border rounded-xl overflow-hidden shadow-lg z-10 max-w-md w-full p-8" (click)="$event.stopPropagation()">
+        
+        <h2 class="text-[28px] font-semibold mt-6 mb-12">Welcome back</h2>
+        <form>
+            <div class="mb-4">
+                <input type="email" id="email" class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" placeholder="Enter your email">
+            </div>
+            <div class="mb-4 relative">
+                <input
+                  type="{{ hidePasswordLogin ? 'password' : 'text' }}"
+                  id="passwordLogin"
+                  class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
+                  placeholder="Password"
+                />
+                <fa-icon [icon]="eyePwdLogin" (click)="togglePasswordLoginVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+              </div>
+            <button class="bg-customBlue text-black font-semibold mb-4 h-12 px-8 rounded-lg hover:bg-[#48e8f0] transition duration-200 w-full">
+                Log In
+            </button>
+            <p class="text-center mb-8">
+                Don't have an account? <button (click)="openSignupModal()" class="text-customBlue">Sign Up</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="isSignupVisible" (click)="closeSignupModal()">
+    <div class="fixed inset-0 bg-black opacity-50"></div>
+    <div class="font-montserrat text-center backdrop-blur bg-transparent text-white gradient-border rounded-xl overflow-hidden shadow-lg z-10 max-w-md w-full p-8" (click)="$event.stopPropagation()">    
+        <h2 class="text-[28px] font-semibold mt-6 mb-12">Create your account</h2>
+        <form>
+            <div class="mb-4">
+                <input type="text" id="name" class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" placeholder="Full name">
+            </div>
+            <div class="mb-4">
+                <input type="email" id="email" class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" placeholder="Email address">
+            </div>
+            <div class="mb-4 relative">
+                <input 
+                    type="{{ hidePassword ? 'password' : 'text' }}" 
+                    id="password" 
+                    class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
+                    placeholder="Password"
+                >
+                <fa-icon [icon]="eyePwd" (click)="togglePasswordVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+            </div>
+            <div class="mb-4 relative">
+                <input 
+                    type="{{ hideConfirmPassword ? 'password' : 'text' }}" 
+                    id="confirmPassword" 
+                    class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
+                    placeholder="Confirm password"
+                >
+                <fa-icon [icon]="eyeConfirmPwd" (click)="toggleConfirmPasswordVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+            </div>
+            <button class="bg-customBlue text-black font-semibold mb-4 h-12 px-8 rounded-lg hover:bg-[#48e8f0] transition duration-200 w-full">
+                Sign Up
+            </button>
+            <p class="text-center mb-8">
+                Already have an account? <button (click)="openLoginModal()" class="text-customBlue">Log In</button>
+            </p>
+        </form>
+    </div>
+</div>
