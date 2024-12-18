@@ -1,12 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { 
-  faClock, // 24/7 Availability
-  faShieldAlt, // Incident Response Support
-  faEye, // Real-Time Threat Detection
-  faChartLine, // Predictive Threat Analysis
-  faEnvelopeOpen, // Phishing Detection
-  faExclamationTriangle // Vulnerability Assessment
-} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faShieldAlt, faEye, faChartLine, faEnvelopeOpen, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component';
 
 @Component({
