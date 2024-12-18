@@ -1,73 +1,56 @@
-<div class="flex h-screen bg-cover bg-center font-montserrat">
+<div class="flex h-screen font-montserrat"
+[ngStyle]="{
+    'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)', 
+    'background-size': 'cover', 
+    'background-position': 'center'
+}">
     <!-- Sidebar for conversation history -->
-    <div *ngIf="sidebarVisible" class="w-1/5 bg-gray-100 p-4 overflow-y-auto border-r border-[#404040]">
-        <div class="flex justify-between mb-4">
-            <!-- Toggle Icon -->
-            <fa-icon 
-                [icon]="sidebarToggleIcon" 
-                class="text-customGray text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
-                (click)="toggleSidebar()">
-            </fa-icon>
-            
+    <div class="m-4 w-1/5 rounded-xl backdrop-blur-sm bg-transparent text-white p-6 overflow-y-auto gradient-border-inverse">
+        <div class="text-end mb-6">
             <!-- New Conversation Icon -->
             <fa-icon 
                 [icon]="newConversationIcon" 
-                class="text-customGray text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
+                class="text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
                 (click)="startNewConversation()">
             </fa-icon>
         </div>
     </div>
 
-    <div 
-        [ngClass]="{ 'w-full': !sidebarVisible, 'w-4/5': sidebarVisible }" 
-        class="flex flex-col p-8 transition-all duration-300"
-    >
-        <div class="flex items-center justify-between mb-4">
-            <h1 class="text-2xl font-semibold font-archivo text-customGray">CyberGuard</h1>
-            <div class="flex items-center">
-                <!-- Toggle Icon -->
-                <fa-icon 
-                    *ngIf="!sidebarVisible" 
-                    [icon]="sidebarToggleIcon" 
-                    class="text-customGray text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
-                    (click)="toggleSidebar()">
-                </fa-icon>
-
-                <!-- New Conversation Icon -->
-                <fa-icon 
-                    *ngIf="!sidebarVisible" 
-                    [icon]="newConversationIcon" 
-                    class="text-customGray text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
-                    (click)="startNewConversation()">
-                </fa-icon>
-            </div>
+    <div class="w-4/5 flex flex-col p-4 transition-all duration-300">
+        <div class="mb-6 mt-4">
+            <h1 class="text-3xl font-semibold font-archivo text-customBlue text-center">CyberGuard</h1>
         </div>
         
-        <div class="flex-grow mb-8 p-4 overflow-y-auto scrollbar-custom">
-            <div class="space-y-4">
+        <!-- Main content area with blur effect -->
+        <div class="backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 overflow-y-auto scrollbar-custom flex flex-col">
+            <!-- Message display area with scroll -->
+            <div class="space-y-4 flex-grow overflow-y-auto">
                 <div *ngFor="let message of messages" class="flex {{ message.isUser ? 'justify-end' : 'justify-start' }}">
                     <div class="max-w-xs w-fit">
-                        <div class="rounded-3xl p-4 shadow-md {{ message.isUser ? 'bg-customBlue' : 'bg-gray-100' }}">
+                        <div class="rounded-3xl p-6 shadow-md {{ message.isUser ? 'bg-gray-100' : 'bg-gray-100' }}">
                             <p class="text-gray-800">{{ message.text }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         
-        <div class="flex-shrink-0 p-2 border-t bg-gray-100 rounded-3xl">
-            <div class="flex">
-                <input 
-                    type="text" 
-                    [(ngModel)]="userInput" 
-                    (keyup.enter)="sendMessage()" 
-                    placeholder="Message CyberGuard" 
-                    class="flex-grow rounded-lg bg-transparent py-2 px-4 mr-2 focus:outline-none" 
-                />
-                <button (click)="sendMessage()" class="bg-customBlue text-black rounded-3xl px-4 py-2 mr-2 shadow-md hover:bg-[#48e8f0] transition duration-200">
-                    <fa-icon [icon]="sendIcon"></fa-icon>
-                </button>
+            <!-- Input and send button at the bottom of the div -->
+            <div class="p-4 bg-custom-gradient rounded-3xl mt-4 shadow-sm shadow-customBlue">
+                <div class="flex">
+                    <input 
+                        type="text" 
+                        [(ngModel)]="userInput" 
+                        (keyup.enter)="sendMessage()" 
+                        placeholder="Message CyberGuard" 
+                        class="flex-grow rounded-lg bg-transparent px-4 mr-2 focus:outline-none text-white" 
+                    />
+                    <button (click)="sendMessage()" class="bg-customBlue text-black rounded-3xl px-4 mr-2 shadow-md hover:bg-[#48e8f0] transition duration-200">
+                        <fa-icon [icon]="sendIcon"></fa-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+    
+    
 </div>

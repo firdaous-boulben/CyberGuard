@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faBars, faEdit, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface Message {
   text: string;
@@ -14,11 +14,9 @@ interface Message {
 export class ChatbotComponent {
   sendIcon = faPaperPlane;
   newConversationIcon = faEdit;
-  sidebarToggleIcon = faBars;
 
   messages: Message[] = [];
   userInput: string = '';
-  sidebarVisible: boolean = true;
 
     // Method to send a message
     sendMessage() {
@@ -46,9 +44,4 @@ export class ChatbotComponent {
       // Optionally, clear conversation history if needed
       // this.conversationHistory = [];
   }
-
-  // Method to toggle the sidebar visibility
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
-}
 }
