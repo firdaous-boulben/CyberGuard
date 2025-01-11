@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse
-import { AuthService } from '../auth.service'; // Import the AuthService
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome-modal',
@@ -29,7 +30,7 @@ export class WelcomeModalComponent implements OnInit {
   loginForm!: FormGroup;
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     // Initialize forms with stricter validation
@@ -92,6 +93,7 @@ export class WelcomeModalComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(
         (response: any) => { 
           console.log('Login success:', response);
+          this.router.navigate(['/cyberguard']);
         },
         (error: HttpErrorResponse) => { 
           console.log('Login error:', error);
@@ -107,6 +109,8 @@ export class WelcomeModalComponent implements OnInit {
       this.authService.register(this.signupForm.value).subscribe(
         (response: any) => { 
           console.log('Registration successful:', response);
+          alert('Registration successful!');
+          this.openLoginModal();
         },
         (error: HttpErrorResponse) => { 
           console.error('Registration failed:', error);
