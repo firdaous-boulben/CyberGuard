@@ -5,7 +5,7 @@ import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component'
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  styleUrls: ['./homepage.component.css']  // Corrected to styleUrls with plural
 })
 export class HomepageComponent {
   faClock = faClock;
@@ -16,7 +16,7 @@ export class HomepageComponent {
   faExclamationTriangle = faExclamationTriangle;
 
   @ViewChild('welcomeModal') welcomeModal!: WelcomeModalComponent;
-
+  
   openWelcomeModal() {
       this.welcomeModal.openModal();
   }

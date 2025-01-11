@@ -70,16 +70,30 @@
     <div class="font-montserrat text-center backdrop-blur bg-transparent text-white gradient-border rounded-xl overflow-hidden shadow-lg z-10 max-w-md w-full p-8" (click)="$event.stopPropagation()">    
         <h2 class="text-[28px] font-semibold mt-6 mb-12">Create your account</h2>
         <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+            <!-- First Name -->
             <div class="mb-4 text-left">
                 <input 
                     type="text" 
-                    id="name"
-                    formControlName="name"
+                    id="firstname"
+                    formControlName="firstname"
                     class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
-                    placeholder="Full name"
+                    placeholder="First Name"
                 />
-                <small *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched" class="text-red-500">
-                    Name is required (minimum 3 characters).
+                <small *ngIf="signupForm.get('firstname')?.invalid && signupForm.get('firstname')?.touched" class="text-red-500">
+                    First name is required (minimum 3 characters).
+                </small>
+            </div>
+           <!-- Last Name -->
+            <div class="mb-4 text-left">
+                <input 
+                    type="text" 
+                    id="lastname"
+                    formControlName="lastname"
+                    class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
+                    placeholder="Last Name"
+                />
+                <small *ngIf="signupForm.get('lastname')?.invalid && signupForm.get('lastname')?.touched" class="text-red-500">
+                    Last name is required (minimum 3 characters).
                 </small>
             </div>
             <div class="mb-4 text-left">
@@ -118,13 +132,13 @@
               
             <div class="mb-4 relative text-left">
                 <div class="relative text-left flex items-center">
-                  <input 
-                    type="{{ hideConfirmPassword ? 'password' : 'text' }}" 
-                    id="confirmPassword" 
-                    formControlName="confirmPassword"
-                    class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
-                    placeholder="Confirm password"
-                  />
+                    <input 
+                        type="{{ hideConfirmPassword ? 'password' : 'text' }}" 
+                        id="confirmPassword" 
+                        formControlName="confirmPassword"
+                        class="border border-gray-400 rounded-lg py-2 px-4 h-12 w-full bg-transparent focus:outline-none focus:border-customBlue transition duration-200" 
+                        placeholder="Confirm Password"
+                />
                   <fa-icon 
                     [icon]="eyeConfirmPwd" 
                     (click)="toggleConfirmPasswordVisibility()" 
