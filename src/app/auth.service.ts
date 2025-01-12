@@ -17,4 +17,12 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/authenticate`, credentials);
   }
+
+  // Call this method to save user data including first name
+  saveUserData(response: any) {
+    if (response && response.access_token) {
+      localStorage.setItem('token', response.access_token);
+      localStorage.setItem('firstName', response.firstname);  // Store first name
+    }
+  }
 }

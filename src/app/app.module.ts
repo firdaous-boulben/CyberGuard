@@ -4,13 +4,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WelcomeModalComponent } from './welcome-modal/welcome-modal.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { ThreatComponent } from './threat/threat.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import { ThreatComponent } from './threat/threat.component';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     })  ],
-  providers: [],
+    providers: [
+      provideHttpClient()
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

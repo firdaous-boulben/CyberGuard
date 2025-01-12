@@ -4,7 +4,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';  // ✅ Import ToastrService
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-welcome-modal',
@@ -32,7 +32,7 @@ export class WelcomeModalComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService  // ✅ Inject ToastrService
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -84,42 +84,41 @@ export class WelcomeModalComponent implements OnInit {
     this.eyeConfirmPwd = this.hideConfirmPassword ? faEye : faEyeSlash;
   }
 
-  // ✅ Login with Toastr
   onLoginSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         (response: any) => {
           if (response && response.access_token) {
-            localStorage.setItem('token', response.access_token);
-            this.toastr.success('Logged in successfully!', 'Success');  // ✅ Success toast
+            this.authService.saveUserData(response);  // Save user data (including first name)
+            this.toastr.success('Logged in successfully!', 'Success');
             this.router.navigate(['/cyberguard']);
           } else {
-            this.toastr.error('Login failed. No token received.', 'Error');  // ✅ Error toast
+            this.toastr.error('Login failed. No token received.', 'Error');
           }
         },
         (error: HttpErrorResponse) => {
-          this.toastr.error('Login failed. Please check your credentials.', 'Error');  // ✅ Error toast
+          this.toastr.error('Login failed. Please check your credentials.', 'Error');
         }
       );
     } else {
-      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');  // ✅ Warning toast
+      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');
     }
   }
 
-  // ✅ Signup with Toastr
   onSignupSubmit() {
     if (this.signupForm.valid) {
       this.authService.register(this.signupForm.value).subscribe(
         (response: any) => {
-          this.toastr.success('Registration successful!', 'Success');  // ✅ Success toast
+          this.authService.saveUserData(response);  // Save user data (including first name)
+          this.toastr.success('Registration successful!', 'Success');
           this.openLoginModal();
         },
         (error: HttpErrorResponse) => {
-          this.toastr.error('Registration failed. Please try again.', 'Error');  // ✅ Error toast
+          this.toastr.error('Registration failed. Please try again.', 'Error');
         }
       );
     } else {
-      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');  // ✅ Warning toast
+      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');
     }
   }
 
