@@ -3,6 +3,8 @@ import { Router } from '@angular/router';  // ✅ Import the Router
 import { faEdit, faPaperPlane,faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { ChatbotService } from '../chatbot.service'; // <-- Import the service
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
 
 interface Message {
   text: string;
@@ -26,39 +28,46 @@ export class ChatbotComponent {
 
 
   constructor(
+    private toastr: ToastrService,
     private chatbotService: ChatbotService,
     private router: Router,
     private http: HttpClient
-  ) {}
-  logout(): void {
-    const token = localStorage.getItem('token');
+  ) { }
+
+
+ logout(): void {
+  console.log('Logout method called');
+  const token = localStorage.getItem('token');
   
-    if (!token) {
-      alert('No active session found.');
-      this.router.navigateByUrl('/#home');
-      return;
-    }
-  
-    this.http.post('http://localhost:8080/api/v1/auth/logout', {}, {
-      headers: { Authorization: `Bearer ${token}` },
-      observe: 'response'  // Observe the full response
-    }).subscribe({
-      next: (response) => {
-        if (response.status === 200 || response.status === 204) {
-          localStorage.removeItem('token');
-          alert('Logged out successfully!');
-          this.router.navigateByUrl('/#home');
-        } else {
-          alert('Logout failed on the server.');
-        }
-      },
-      error: (err) => {
-        alert('Logout failed. Please try again.');
-        console.error('Logout error:', err);
-        this.router.navigate(['/login']);
-      }
-    });
+  if (!token) {
+    console.log('No active session found.');
+    this.toastr.error('No active session found.', 'Error');
+    this.router.navigateByUrl('/#home');
+    return;
   }
+  
+  this.http.post('http://localhost:8080/api/v1/auth/logout', {}, {
+    headers: { Authorization: `Bearer ${token}` },
+    observe: 'response'
+  }).subscribe({
+    next: (response) => {
+      console.log('Logout response:', response);
+      if (response.status === 200 || response.status === 204) {
+        localStorage.removeItem('token');
+        this.toastr.success('Logged out successfully!', 'Success');
+        this.router.navigateByUrl('/#home');
+      } else {
+        this.toastr.error('Logout failed on the server.', 'Error');
+      }
+    },
+    error: (err) => {
+      console.error('Logout error:', err);
+      this.toastr.error('Logout failed. Please try again.', 'Error');
+      this.router.navigate(['/login']);
+    }
+  });
+}
+
   
   
   

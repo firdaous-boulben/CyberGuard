@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';  // ✅ Import ToastrService
 
 @Component({
   selector: 'app-welcome-modal',
@@ -11,12 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./welcome-modal.component.css']
 })
 export class WelcomeModalComponent implements OnInit {
-  // Modal visibility controls
   isVisible = false;
   isLoginVisible = false;
   isSignupVisible = false;
 
-  // Icons for toggling password visibility
   eyePwdLogin = faEye;
   eyePwd = faEye;
   eyeConfirmPwd = faEye;
@@ -26,14 +25,17 @@ export class WelcomeModalComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
 
-  // Forms
   loginForm!: FormGroup;
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService  // ✅ Inject ToastrService
+  ) {}
 
   ngOnInit() {
-    // Initialize forms with stricter validation
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.strongPasswordValidator]],
@@ -44,11 +46,10 @@ export class WelcomeModalComponent implements OnInit {
       lastname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.strongPasswordValidator]],
-      confirmPassword: ['', [Validators.required]],  // <-- this is 'confirmPassword'
+      confirmPassword: ['', [Validators.required]],
     }, { validators: this.passwordMatchValidator });
   }
-  
-  // Custom validator for strong passwords
+
   strongPasswordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value || '';
     const hasUpperCase = /[A-Z]/.test(value);
@@ -57,20 +58,17 @@ export class WelcomeModalComponent implements OnInit {
     const hasSpecialChar = /[@$!%*?&]/.test(value);
     const hasMinLength = value.length >= 8;
 
-    if (!hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar || !hasMinLength) {
-      return { weakPassword: true };
-    }
-    return null;
+    return (!hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar || !hasMinLength)
+      ? { weakPassword: true }
+      : null;
   }
 
-  // Custom validator for password matching
   passwordMatchValidator(form: FormGroup): ValidationErrors | null {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { mismatch: true };
   }
 
-  // Password visibility toggles
   togglePasswordLoginVisibility() {
     this.hidePasswordLogin = !this.hidePasswordLogin;
     this.eyePwdLogin = this.hidePasswordLogin ? faEye : faEyeSlash;
@@ -86,65 +84,53 @@ export class WelcomeModalComponent implements OnInit {
     this.eyeConfirmPwd = this.hideConfirmPassword ? faEye : faEyeSlash;
   }
 
-  // Form submission methods
+  // ✅ Login with Toastr
   onLoginSubmit() {
     if (this.loginForm.valid) {
-      console.log('Login data:', this.loginForm.value);
-  
       this.authService.login(this.loginForm.value).subscribe(
-        (response: any) => { 
-          console.log('Login success:', response);
-  
+        (response: any) => {
           if (response && response.access_token) {
-            // ✅ Save the token in localStorage
             localStorage.setItem('token', response.access_token);
-            console.log('Token stored in localStorage:', response.access_token);
-  
-            // ✅ Redirect to the dashboard or chatbot
+            this.toastr.success('Logged in successfully!', 'Success');  // ✅ Success toast
             this.router.navigate(['/cyberguard']);
           } else {
-            console.error('No access token received.');
-            alert('Login failed. No token received.');
+            this.toastr.error('Login failed. No token received.', 'Error');  // ✅ Error toast
           }
         },
-        (error: HttpErrorResponse) => { 
-          console.error('Login error:', error);
-          alert('Login failed. Please check your credentials.');
+        (error: HttpErrorResponse) => {
+          this.toastr.error('Login failed. Please check your credentials.', 'Error');  // ✅ Error toast
         }
       );
     } else {
-      console.warn('Login form is invalid');
-      alert('Please fill in all required fields correctly.');
+      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');  // ✅ Warning toast
     }
   }
 
+  // ✅ Signup with Toastr
   onSignupSubmit() {
     if (this.signupForm.valid) {
       this.authService.register(this.signupForm.value).subscribe(
-        (response: any) => { 
-          console.log('Registration successful:', response);
-          alert('Registration successful!');
+        (response: any) => {
+          this.toastr.success('Registration successful!', 'Success');  // ✅ Success toast
           this.openLoginModal();
         },
-        (error: HttpErrorResponse) => { 
-          console.error('Registration failed:', error);
+        (error: HttpErrorResponse) => {
+          this.toastr.error('Registration failed. Please try again.', 'Error');  // ✅ Error toast
         }
       );
     } else {
-      console.log('Signup form is invalid');
+      this.toastr.warning('Please fill in all required fields correctly.', 'Warning');  // ✅ Warning toast
     }
   }
 
   openModal() {
     this.isModalOpen = true;
-    console.log('Modal opened');
   }
 
-  // Open modals and handle modal visibility
   openLoginModal() {
     this.isLoginVisible = true;
     this.isSignupVisible = false;
-    this.isVisible = true;  // Ensure the modal is visible
+    this.isVisible = true;
   }
 
   closeLoginModal() {
@@ -155,7 +141,7 @@ export class WelcomeModalComponent implements OnInit {
   openSignupModal() {
     this.isSignupVisible = true;
     this.isLoginVisible = false;
-    this.isVisible = true;  // Ensure the modal is visible
+    this.isVisible = true;
   }
 
   closeSignupModal() {
@@ -167,5 +153,5 @@ export class WelcomeModalComponent implements OnInit {
     this.isVisible = false;
     this.isLoginVisible = false;
     this.isSignupVisible = false;
-  }  
+  }
 }
