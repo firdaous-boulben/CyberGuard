@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { faClock, faShieldAlt, faEye, faChartLine, faEnvelopeOpen, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faShieldAlt, faEye, faChartLine, faExclamationTriangle, faUserCog } from '@fortawesome/free-solid-svg-icons';
 import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component';
 
 @Component({
@@ -12,7 +12,7 @@ export class HomepageComponent {
   faShieldAlt = faShieldAlt;
   faEye = faEye;
   faChartLine = faChartLine;
-  faEnvelopeOpen = faEnvelopeOpen;
+  faUserCog = faUserCog;
   faExclamationTriangle = faExclamationTriangle;
 
   @ViewChild('welcomeModal') welcomeModal!: WelcomeModalComponent;
