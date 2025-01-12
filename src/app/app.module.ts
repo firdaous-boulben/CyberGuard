@@ -11,13 +11,15 @@ import { HttpClientModule } from '@angular/common/http';  // Use HttpClientModul
 import { HomepageComponent } from './homepage/homepage.component';
 import { WelcomeModalComponent } from './welcome-modal/welcome-modal.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
+import { ThreatComponent } from './threat/threat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     WelcomeModalComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    ThreatComponent
   ],
   imports: [
     BrowserModule,

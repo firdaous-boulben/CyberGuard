@@ -1,0 +1,49 @@
+<div class="flex justify-center font-montserrat"
+    [ngStyle]="{
+        'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)', 
+        'background-size': 'cover', 
+        'background-position': 'center'
+    }"
+>
+    <div class="mb-8 mt-12 text-center">
+        <h1 class="text-3xl font-semibold font-archivo text-customBlue">
+            CyberGuard’s Threat Impact Simulation
+        </h1>
+        <p class="text-lg text-white mt-4 mx-auto px-44">
+            In CyberGuard, you can assess the potential security impact of any given IP address within your network. Using advanced Diffusion Models, CyberGuard predicts the spread of vulnerabilities or threats associated with the provided IP address.
+        </p>
+        <div class="mt-12 mx-auto backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 max-w-5xl overflow-y-auto scrollbar-custom flex flex-col">
+            <ul class="space-y-4 text-left">
+                <li class="pl-8 space-y-4">
+                    <div class="flex items-center">
+                        <fa-icon [icon]="faNetworkWired" class="text-customBlue text-2xl mr-4"></fa-icon>
+                        <h2 class="text-xl font-semibold text-customBlue mr-4">Network Graph:</h2>
+                        <span class="text-white">Visualize the current state of your network.</span>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <img src="../../assets/images/network-graph.jpg" alt="Network Diagram" class="rounded-lg shadow-lg max-w-2xl h-auto">
+                    </div>
+                </li>                               
+                <li class="pl-8 space-y-4">
+                    <div class="flex items-center">
+                        <fa-icon [icon]="faKeyboard" class="text-customBlue text-2xl mr-4"></fa-icon>
+                        <h2 class="text-xl font-semibold text-customBlue mr-4">Enter IP Address:</h2>
+                        <span class="text-white">Provide the IP address to analyze.</span>
+                    </div>
+                    <div class="mt-4 flex justify-center space-x-4 w-full max-w-2xl mx-auto">
+                        <input type="text" placeholder="Enter IP Address" class="flex-grow p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-customBlue focus:border-transparent">
+                        <button type="submit" class="bg-customBlue text-black font-bold w-32 rounded-lg transition duration-200 hover:bg-[#48e8f0] flex items-center justify-center">
+                            Analyze
+                        </button>
+                    </div>
+                </li>                                            
+                <li class="flex items-center pl-8">
+                    <fa-icon [icon]="faChartBar" class="text-customBlue text-2xl mr-4"></fa-icon>
+                    <h2 class="text-xl font-semibold text-customBlue mr-4">Impact Visualization:</h2>
+                    <span class="text-white">See the generated graph illustrating how the threat spreads from the affected IP.</span>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</div>
