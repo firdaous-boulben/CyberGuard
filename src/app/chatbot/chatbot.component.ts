@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';  // ✅ Import the Router
 import { faEdit, faPaperPlane,faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { ChatbotService } from '../chatbot.service'; // <-- Import the service
+import { HttpClient } from '@angular/common/http';
 
 interface Message {
   text: string;
   isUser: boolean;  // true if the message is from the user, false if from the bot
+  
 }
 
 @Component({
@@ -22,7 +24,44 @@ export class ChatbotComponent {
   messages: Message[] = [];
   userInput: string = '';
 
-  constructor(private chatbotService: ChatbotService, private router: Router) {}
+
+  constructor(
+    private chatbotService: ChatbotService,
+    private router: Router,
+    private http: HttpClient
+  ) {}
+  logout(): void {
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      alert('No active session found.');
+      this.router.navigateByUrl('/#home');
+      return;
+    }
+  
+    this.http.post('http://localhost:8080/api/v1/auth/logout', {}, {
+      headers: { Authorization: `Bearer ${token}` },
+      observe: 'response'  // Observe the full response
+    }).subscribe({
+      next: (response) => {
+        if (response.status === 200 || response.status === 204) {
+          localStorage.removeItem('token');
+          alert('Logged out successfully!');
+          this.router.navigateByUrl('/#home');
+        } else {
+          alert('Logout failed on the server.');
+        }
+      },
+      error: (err) => {
+        alert('Logout failed. Please try again.');
+        console.error('Logout error:', err);
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+  
+  
+  
 
   // Method to send a message
   sendMessage() {

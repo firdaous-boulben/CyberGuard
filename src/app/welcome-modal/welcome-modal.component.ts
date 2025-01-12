@@ -90,17 +90,31 @@ export class WelcomeModalComponent implements OnInit {
   onLoginSubmit() {
     if (this.loginForm.valid) {
       console.log('Login data:', this.loginForm.value);
+  
       this.authService.login(this.loginForm.value).subscribe(
         (response: any) => { 
           console.log('Login success:', response);
-          this.router.navigate(['/cyberguard']);
+  
+          if (response && response.access_token) {
+            // ✅ Save the token in localStorage
+            localStorage.setItem('token', response.access_token);
+            console.log('Token stored in localStorage:', response.access_token);
+  
+            // ✅ Redirect to the dashboard or chatbot
+            this.router.navigate(['/cyberguard']);
+          } else {
+            console.error('No access token received.');
+            alert('Login failed. No token received.');
+          }
         },
         (error: HttpErrorResponse) => { 
-          console.log('Login error:', error);
+          console.error('Login error:', error);
+          alert('Login failed. Please check your credentials.');
         }
       );
     } else {
-      console.log('Login form is invalid');
+      console.warn('Login form is invalid');
+      alert('Please fill in all required fields correctly.');
     }
   }
 

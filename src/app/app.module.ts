@@ -19,7 +19,7 @@ import { ThreatComponent } from './threat/threat.component';
     HomepageComponent,
     WelcomeModalComponent,
     ChatbotComponent,
-    ThreatComponent
+    ThreatComponent,
   ],
   imports: [
     BrowserModule,
