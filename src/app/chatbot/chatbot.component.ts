@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { faEdit, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';  // ✅ Import the Router
+import { faEdit, faPaperPlane,faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { ChatbotService } from '../chatbot.service'; // <-- Import the service
 
 interface Message {
@@ -15,11 +16,13 @@ interface Message {
 export class ChatbotComponent {
   sendIcon = faPaperPlane;
   newConversationIcon = faEdit;
+  homeIcon = faHome;              // Home icon
+  logoutIcon = faSignOutAlt;      // Logout icon
 
   messages: Message[] = [];
   userInput: string = '';
 
-  constructor(private chatbotService: ChatbotService) {}
+  constructor(private chatbotService: ChatbotService, private router: Router) {}
 
   // Method to send a message
   sendMessage() {
@@ -46,5 +49,9 @@ export class ChatbotComponent {
     // Clear messages and user input
     this.messages = [];
     this.userInput = '';
+  }
+  // Navigate to the home page
+  goHome(): void {
+    this.router.navigateByUrl('/#home');  // Navigates to http://localhost:4200/#/home
   }
 }

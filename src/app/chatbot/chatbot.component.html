@@ -7,33 +7,52 @@
 
     <!-- Sidebar for conversation history -->
     <div class="m-4 w-1/5 rounded-xl backdrop-blur-sm bg-transparent text-white p-6 overflow-y-auto gradient-border-inverse">
-        <div class="text-end mb-6">
-            <!-- New Conversation Icon -->
+        <div class="flex justify-between items-center mb-6">
+            <!-- New Conversation Icon (Left) -->
             <fa-icon 
                 [icon]="newConversationIcon" 
                 class="text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
                 (click)="startNewConversation()">
             </fa-icon>
+    
+            <!-- Home Icon (Right) -->
+            <fa-icon 
+                [icon]="homeIcon" 
+                class="text-2xl cursor-pointer hover:text-customBlue transition duration-200" 
+                (click)="goHome()">
+            </fa-icon>
         </div>
-        <!-- Additional sidebar content can go here -->
+
     </div>
+    
 
     <div class="w-4/5 flex flex-col p-4 transition-all duration-300">
-        <div class="mb-6 mt-4">
-            <h1 class="text-3xl font-semibold font-archivo text-customBlue text-center">CyberGuard</h1>
-        </div>
+       <!-- Header Section -->
+    <div class="mb-6 mt-4 flex justify-between items-center">
+        <h1 class="text-3xl font-semibold font-archivo text-customBlue flex-grow text-center">CyberGuard</h1>
+        <!-- Logout Icon -->
+        <fa-icon 
+            [icon]="logoutIcon" 
+            class="text-2xl cursor-pointer hover:text-red-500 transition duration-200 text-white"
+            >
+        </fa-icon>
+    </div>
 
         <!-- Main content area with blur effect -->
         <div class="backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 overflow-y-auto scrollbar-custom flex flex-col">
             <!-- Message display area with scroll -->
             <div class="space-y-4 flex-grow overflow-y-auto">
                 <div *ngFor="let message of messages" class="flex {{ message.isUser ? 'justify-end' : 'justify-start' }}">
-                    <div class="max-w-xs w-fit">
-                        <div class="rounded-3xl p-6 shadow-md {{ message.isUser ? 'bg-gray-100' : 'bg-gray-100' }}">
-                            <p class="text-gray-800">{{ message.text }}</p>
+                    <div class="w-fit" style="max-width: 40rem;">
+                        <div 
+                            class="rounded-3xl p-6 shadow-md" 
+                            [ngClass]="message.isUser ? 'bg-gray-100' : 'bg-gray-800 text-white'"
+                        >
+                            <p>{{ message.text }}</p>
                         </div>
                     </div>
                 </div>
+                
             </div>
 
             <!-- Input and send button at the bottom of the div -->
