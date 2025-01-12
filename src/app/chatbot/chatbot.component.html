@@ -1,9 +1,10 @@
 <div class="flex h-screen font-montserrat"
-[ngStyle]="{
-    'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)', 
-    'background-size': 'cover', 
-    'background-position': 'center'
-}">
+     [ngStyle]="{
+        'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)', 
+        'background-size': 'cover', 
+        'background-position': 'center'
+     }">
+
     <!-- Sidebar for conversation history -->
     <div class="m-4 w-1/5 rounded-xl backdrop-blur-sm bg-transparent text-white p-6 overflow-y-auto gradient-border-inverse">
         <div class="text-end mb-6">
@@ -14,13 +15,14 @@
                 (click)="startNewConversation()">
             </fa-icon>
         </div>
+        <!-- Additional sidebar content can go here -->
     </div>
 
     <div class="w-4/5 flex flex-col p-4 transition-all duration-300">
         <div class="mb-6 mt-4">
             <h1 class="text-3xl font-semibold font-archivo text-customBlue text-center">CyberGuard</h1>
         </div>
-        
+
         <!-- Main content area with blur effect -->
         <div class="backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 overflow-y-auto scrollbar-custom flex flex-col">
             <!-- Message display area with scroll -->
@@ -33,7 +35,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Input and send button at the bottom of the div -->
             <div class="p-4 bg-custom-gradient rounded-3xl mt-4 shadow-sm shadow-customBlue">
                 <div class="flex">
@@ -51,6 +53,5 @@
             </div>
         </div>
     </div>
-    
-    
+
 </div>
