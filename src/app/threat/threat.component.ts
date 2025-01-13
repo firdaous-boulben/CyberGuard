@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ChangeDetectorRef } from '@angular/core';
+import { ThreatService } from '../threat.service';
 import { faChartBar, faKeyboard, faNetworkWired, faSignOutAlt, faHome } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,10 +12,31 @@ import { faChartBar, faKeyboard, faNetworkWired, faSignOutAlt, faHome } from '@f
   styleUrls: ['./threat.component.css']
 })
 export class ThreatComponent {
+
+
+  ipAddress: string = '';
+  errorMessage: string = '';
+  successMessage: string = '';
+
+
+  onSubmit(): void {
+    this.networkGraphService.submitIp(this.ipAddress).subscribe(
+      (response) => {
+        this.successMessage = 'IP address submitted successfully!';
+        this.errorMessage = '';
+        console.log(response);
+      },
+      (error) => {
+        this.errorMessage = 'An error occurred. Please try again.';
+        this.successMessage = '';
+        console.error(error);
+      }
+    );
+  }
   faNetworkWired = faNetworkWired;
   faKeyboard = faKeyboard;
   faChartBar = faChartBar;
-  
+
   // Add logout and home icons
   logoutIcon = faSignOutAlt;
   homeIcon = faHome;
@@ -25,7 +47,8 @@ export class ThreatComponent {
     private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private networkGraphService: ThreatService
   ) {}
 
   // Navigate to the home page

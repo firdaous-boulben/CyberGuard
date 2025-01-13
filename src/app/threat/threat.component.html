@@ -1,21 +1,21 @@
 <div class="flex justify-center font-montserrat"
     [ngStyle]="{
-        'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)', 
-        'background-size': 'cover', 
+        'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/images/bg.jpg)',
+        'background-size': 'cover',
         'background-position': 'center'
     }"
 >
     <!-- Icon Container -->
     <div class="absolute top-6 left-6 flex space-x-6">
-        <fa-icon 
-            [icon]="homeIcon" 
-            class="text-3xl cursor-pointer text-white hover:text-customBlue transition-transform transform hover:scale-110 duration-200" 
+        <fa-icon
+            [icon]="homeIcon"
+            class="text-3xl cursor-pointer text-white hover:text-customBlue transition-transform transform hover:scale-110 duration-200"
             (click)="goHome()">
         </fa-icon>
     </div>
     <div class="absolute top-6 right-6 flex space-x-6">
-        <fa-icon 
-            [icon]="logoutIcon" 
+        <fa-icon
+            [icon]="logoutIcon"
             class="text-3xl cursor-pointer text-white hover:text-red-500 transition-transform transform hover:scale-110 duration-200"
             (click)="logout()">
         </fa-icon>
@@ -25,45 +25,63 @@
         <h1 class="text-4xl font-semibold font-archivo text-customBlue mb-4">
             CyberGuard’s Threat Impact Simulation
         </h1>
-        
-        <!-- Box for description text -->
-<div class="mt-12 mx-auto backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 max-w-5xl overflow-y-auto scrollbar-custom flex flex-col shadow-lg">
-    <p class="text-xl text-white text-center">
-        In CyberGuard, you can assess the potential security impact of any given IP address within your network. Using advanced Diffusion Models, CyberGuard predicts the spread of vulnerabilities or threats associated with the provided IP address. The tool analyzes the network’s topology and identifies how threats might propagate across connected systems and services. Stay ahead of security risks by visualizing the threat’s potential impact across your infrastructure.
-    </p>
-</div>
 
+        <!-- Box for description text -->
+        <div class="mt-12 mx-auto backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 max-w-5xl overflow-y-auto scrollbar-custom flex flex-col shadow-lg">
+            <p class="text-xl text-white text-center">
+                In CyberGuard, you can assess the potential security impact of any given IP address within your network. Using advanced Diffusion Models, CyberGuard predicts the spread of vulnerabilities or threats associated with the provided IP address. The tool analyzes the network’s topology and identifies how threats might propagate across connected systems and services. Stay ahead of security risks by visualizing the threat’s potential impact across your infrastructure.
+            </p>
+        </div>
+
+        <!-- Form to input IP and analyze -->
         <div class="mt-12 mx-auto backdrop-blur-sm bg-transparent rounded-xl gradient-border flex-grow p-6 max-w-5xl overflow-y-auto scrollbar-custom flex flex-col shadow-lg">
             <ul class="space-y-6 text-left">
                 <li class="pl-8 space-y-6">
                     <div class="flex items-center">
                         <fa-icon [icon]="faNetworkWired" class="text-customBlue text-3xl mr-4 transform hover:scale-105 transition duration-200"></fa-icon>
-                        <h2 class="text-2xl font-semibold text-customBlue mr-4">Network Graph:</h2>
-                        <span class="text-white">Visualize the current state of your network and identify potential risks.</span>
-                    </div>
-                    <div class="mt-4 flex justify-center">
-                        <img src="../../assets/images/network-graph.jpg" alt="Network Diagram" class="rounded-lg shadow-2xl max-w-2xl h-auto">
-                    </div>
-                </li>                               
-                <li class="pl-8 space-y-6">
-                    <div class="flex items-center">
-                        <fa-icon [icon]="faKeyboard" class="text-customBlue text-3xl mr-4 transform hover:scale-105 transition duration-200"></fa-icon>
                         <h2 class="text-2xl font-semibold text-customBlue mr-4">Enter IP Address:</h2>
                         <span class="text-white">Provide the IP address to analyze for security risks.</span>
                     </div>
+                    <div class="mt-4 flex justify-center">
+                      <img src="../../assets/images/network-graph.jpg" alt="Network Diagram" class="rounded-lg shadow-2xl max-w-2xl h-auto">
+                  </div>
+                  <div class="flex items-center">
+                    <fa-icon [icon]="faKeyboard" class="text-customBlue text-3xl mr-4 transform hover:scale-105 transition duration-200"></fa-icon>
+                    <h2 class="text-2xl font-semibold text-customBlue mr-4">Enter IP Address:</h2>
+                    <span class="text-white">Provide the IP address to analyze for security risks.</span>
+                </div>
+
                     <div class="mt-4 flex justify-center space-x-4 w-full max-w-2xl mx-auto">
-                        <input type="text" placeholder="Enter IP Address" class="flex-grow p-4 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-customBlue focus:border-transparent transition duration-200">
-                        <button type="submit" class="bg-[rgb(89,207,213)] text-white font-bold w-32 rounded-lg transition transform hover:scale-105 duration-200 hover:bg-[rgb(89,207,213)] flex items-center justify-center">
+
+                        <input
+                            type="text"
+                            placeholder="Enter IP Address"
+                            [(ngModel)]="ipAddress"
+                            class="flex-grow p-4 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-customBlue focus:border-transparent transition duration-200">
+                        <button
+                            (click)="onSubmit()"
+                            class="bg-[rgb(89,207,213)] text-white font-bold w-32 rounded-lg transition transform hover:scale-105 duration-200 hover:bg-[rgb(89,207,213)] flex items-center justify-center">
                             Analyze
                         </button>
                     </div>
-                </li>                                            
-                <li class="flex items-center pl-8">
-                    <fa-icon [icon]="faChartBar" class="text-customBlue text-3xl mr-4 transform hover:scale-105 transition duration-200"></fa-icon>
-                    <h2 class="text-2xl font-semibold text-customBlue mr-4">Impact Visualization:</h2>
-                    <span class="text-white">See the generated graph illustrating how the threat spreads from the affected IP.</span>
                 </li>
             </ul>
+            <div class="flex items-center">
+              <fa-icon [icon]="faChartBar" class="text-customBlue text-3xl mr-4 transform hover:scale-105 transition duration-200"></fa-icon>
+              <h2 class="text-2xl font-semibold text-customBlue mr-4">Impact Visualization:</h2>
+              <span class="text-white">See the generated graph illustrating how the threat spreads from the affected IP.</span>
+          </div>
+            <!-- Display success message and graph after submission -->
+            <div *ngIf="successMessage" class="mt-8">
+                <!-- <h2 class="text-2xl text-customBlue font-semibold mb-4">Network Impact Analysis</h2> -->
+
+                <img src="http://localhost:5001/static/graphaffected.png" alt="Impact Analysis Visualization" class="rounded-lg shadow-2xl max-w-2xl mx-auto">
+            </div>
+
+            <!-- Display error message if any -->
+            <div *ngIf="errorMessage" class="mt-8">
+                <div class="text-red-500 text-lg font-semibold">{{ errorMessage }}</div>
+            </div>
         </div>
     </div>
 </div>
